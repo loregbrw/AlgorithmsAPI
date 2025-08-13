@@ -4,6 +4,7 @@ use tower::ServiceBuilder;
 mod routes;
 mod handlers;
 mod algorithms;
+pub mod enums;
 
 const BIND_ADDR: &str = "127.0.0.1:2525";
 
