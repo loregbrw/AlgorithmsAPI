@@ -19,7 +19,7 @@ pub struct Memory {
 
 #[derive(Serialize)]
 pub struct SystemStats {
-    pub os: Option<String>,
+    pub kernel: String,
     pub cpu: Cpu,
     pub memory: Memory,
 }

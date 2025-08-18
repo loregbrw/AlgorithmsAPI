@@ -1,9 +1,17 @@
-use crate::algorithms::SortAlgorithm;
+use crate::algorithms::{BaseAlgorithm, SortAlgorithm};
 
 pub struct BubbleSort;
 
-impl SortAlgorithm for BubbleSort {
-    fn sort<T: PartialOrd>(array: &mut [T]) -> &mut [T] {
+impl BaseAlgorithm<Vec<f64>, Vec<f64>> for BubbleSort {
+    fn name(&self) -> &'static str {
+        "Bubble Sort"
+    }
+
+    fn complexity(&self) -> &'static str {
+        "O(n²)"
+    }
+
+    fn run(&self, mut array: Vec<f64>) -> Vec<f64> {
         let size = array.len();
 
         for i in 0..size {
@@ -24,3 +32,5 @@ impl SortAlgorithm for BubbleSort {
         array
     }
 }
+
+impl SortAlgorithm for BubbleSort {}
