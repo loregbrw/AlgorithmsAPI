@@ -1,26 +1,35 @@
-use crate::{algorithms::{self, sort::bubble_sort::BubbleSort, SortAlgorithm}, models::requests::SortPayload};
+use crate::{
+    algorithms::{self, sort::bubble_sort::BubbleSort, SortAlgorithm}, executor::executor::Executor, models::{
+        requests::{QueryParameters, SortPayload}, responses::{AlgorithmResponse, BaseResponse, WithStatsResponse}, stats::SystemStats
+    }
+};
+use axum::{extract::{Path, Query}, http::{response, StatusCode}, Json};
 
-use axum::{extract::Path, http::StatusCode, Json};
-
-pub enum AlgorithmType {
-    BUBBLE
-}
-
-
-
-pub async fn hello_world() -> Json<String> {
-    Json(String::from("Hello world!"))
+pub async fn hello_world() -> Json<SystemStats> {
+    Json(SystemStats::collect())
 }
 
 pub async fn sort_handler(
     Path(algorithm): Path<String>,
-    Json(request): Json<SortPayload>
-) -> Result<Json<Vec<f64>>, StatusCode> {
+    Query(params): Query<QueryParameters>,
+    Json(request): Json<SortPayload>,
+) -> Result<Json<BaseResponse<Vec<f64>>>, StatusCode> {
     let algorithm: Box<dyn SortAlgorithm> = match algorithm.as_str() {
         "bubble" | "bubble-sort" => Box::new(BubbleSort),
         // ""
         _ => return Err(StatusCode::BAD_REQUEST),
     };
 
-    Ok(Json(algorithm.run(request.data)))
+    let algorithm_response = Executor::execute(algorithm, request.data);
+
+    let response = if params.system_stats {
+        BaseResponse::WithStats(WithStatsResponse {
+            algorithm: algorithm_response,
+            system_stats: SystemStats::collect()
+        })
+    } else {
+        BaseResponse::AlgorithmOnly(algorithm_response)
+    };
+
+    Ok(Json(response))
 }

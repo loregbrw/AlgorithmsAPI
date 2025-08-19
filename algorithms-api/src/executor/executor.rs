@@ -1,30 +1,32 @@
-// use std::time::Instant;
+use std::time::Instant;
 
-// use crate::{algorithms::BaseAlgorithm, models::responses::Response};
+use crate::{
+    algorithms::BaseAlgorithm,
+    models::{responses::AlgorithmResponse, stats::Stats},
+};
 
-// pub struct Executor;
+pub struct Executor;
 
-// impl Executor {
-//     pub fn execute<I, O>(algorithm: Box<dyn BaseAlgorithm<I, O>>, input: I) -> Response<O> {
+impl Executor {
+    pub fn execute<I, O>(
+        algorithm: Box<dyn BaseAlgorithm<I, O>>,
+        input: I,
+    ) -> AlgorithmResponse<O> {
+        
+        let start = Instant::now();
 
-//         let start = Instant::now();
+        let result = algorithm.run(input);
 
-//         let result = algorithm.run(input);
+        let duration = start.elapsed();
 
-//         let duration = start.elapsed();
-
-//         let stats = Stats {
-//             time_ms: duration.as_millis() as u64,
-//             // aqui depois dá pra adicionar consumo de memória
-//         };
-
-//         Response {
-//             algorithm: AlgorithmResult {
-//                 result,
-//                 name: algorithm.name(),
-//                 complexity: algorithm.complexity(),
-//             },
-//             stats,
-//         }
-//     }
-// }
+        AlgorithmResponse {
+            result,
+            name: algorithm.name(),
+            complexity: algorithm.complexity(),
+            stats: Stats {
+                execution_time_us: duration.as_micros(),
+                memory_used_bytes: 0 as usize,
+            },
+        }
+    }
+}

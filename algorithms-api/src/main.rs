@@ -1,12 +1,12 @@
-use axum::{Router};
+use axum::Router;
 use tower::ServiceBuilder;
 
-mod routes;
-mod handlers;
 mod algorithms;
-mod models;
-mod services;
 mod executor;
+mod handlers;
+mod models;
+mod routes;
+mod services;
 
 const BIND_ADDR: &str = "127.0.0.1:2525";
 

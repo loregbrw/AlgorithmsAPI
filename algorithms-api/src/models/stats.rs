@@ -1,33 +1,27 @@
 use serde::Serialize;
 
 #[derive(Serialize)]
-pub struct Cpu {
+pub struct CpuStats {
     pub physical_cores: Option<usize>,
-    pub logical_processors: i32,
-    pub base_speed_ghz: i32,
-    pub current_speed_ghz: i32,
-    pub cpu_usage_percent: i32,
-    pub uptime_seconds: i32,
+    pub logical_processors: usize,
+    pub uptime: String,
 }
 
 #[derive(Serialize)]
-pub struct Memory {
+pub struct MemoryStats {
     pub total_memory_gb: f64,
     pub available_memory_gb: f64,
-    pub swap_used_gb: f64,
 }
 
 #[derive(Serialize)]
 pub struct SystemStats {
     pub kernel: String,
-    pub cpu: Cpu,
-    pub memory: Memory,
+    pub cpus: CpuStats,
+    pub memory: MemoryStats,
 }
 
 #[derive(Serialize)]
 pub struct Stats {
-    pub execution_time_ms: u128,
+    pub execution_time_us: u128,
     pub memory_used_bytes: usize,
-
-    pub system_stat: SystemStats,
 }
