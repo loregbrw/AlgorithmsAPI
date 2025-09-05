@@ -1,8 +1,11 @@
-use axum::{routing::get, Router};
-
-use crate::handlers::sort::hello_world;
+use crate::handlers::sort::{hello_world, sort_handler};
+use axum::{
+    Router,
+    routing::{get, post},
+};
 
 pub fn router() -> Router {
     Router::new()
-        .route("/", get(hello_world))
+    .route("/", get(hello_world))
+    .route("/sort/{algorithm}", post(sort_handler))
 }
