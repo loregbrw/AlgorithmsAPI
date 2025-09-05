@@ -1,4 +1,4 @@
-use crate::algorithms::{sort::bubble_sort::BubbleSort, SortAlgorithm};
+use crate::algorithms::{sort::{bubble_sort::BubbleSort, selection_sort::SelectionSort}, SortAlgorithm};
 use std::collections::HashMap;
 
 pub mod bubble_sort;
@@ -11,6 +11,9 @@ pub fn sort_algorithms_endpoints() -> HashMap<&'static str, SortAlgorithmFactory
 
     map.insert("bubble", || Box::new(BubbleSort));
     map.insert("bubble-sort", || Box::new(BubbleSort));
+
+    map.insert("selection", || Box::new(SelectionSort));
+    map.insert("selection-sort", || Box::new(SelectionSort));
 
     map
 }
