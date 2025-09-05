@@ -8,10 +8,26 @@ pub enum BaseResponse<T> {
     AlgorithmOnly(AlgorithmResponse<T>),
 }
 
+impl<T> BaseResponse<T> {
+    pub fn from_algorithm_response(
+        algorithm_response: AlgorithmResponse<T>,
+        with_stats: bool,
+    ) -> Self {
+        if with_stats {
+            BaseResponse::WithStats(WithStatsResponse {
+                algorithm: algorithm_response,
+                system_stats: SystemStats::collect(),
+            })
+        } else {
+            BaseResponse::AlgorithmOnly(algorithm_response)
+        }
+    }
+}
+
 #[derive(Serialize)]
 pub struct WithStatsResponse<T> {
     pub algorithm: AlgorithmResponse<T>,
-    pub system_stats: SystemStats
+    pub system_stats: SystemStats,
 }
 
 #[derive(Serialize)]
@@ -19,5 +35,5 @@ pub struct AlgorithmResponse<T> {
     pub result: T,
     pub name: &'static str,
     pub complexity: &'static str,
-    pub stats: Stats
+    pub stats: Stats,
 }

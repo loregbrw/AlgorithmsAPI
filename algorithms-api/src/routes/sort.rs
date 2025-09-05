@@ -6,6 +6,6 @@ use axum::{
 
 pub fn router() -> Router {
     Router::new()
-        .route("/", get(hello_world))
-        .route("/{algorithm}", post(sort_handler))
+    .route("/", get(hello_world))
+    .route("/sort/{algorithm}", post(sort_handler))
 }

@@ -8,7 +8,7 @@ mod models;
 mod routes;
 mod services;
 
-const BIND_ADDR: &str = "127.0.0.1:2525";
+const BIND_ADDR: &'static str = "127.0.0.1:2525";
 
 #[tokio::main]
 async fn main() {
