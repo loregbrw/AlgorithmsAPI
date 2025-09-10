@@ -1,7 +1,8 @@
-use crate::algorithms::{sort::{bubble_sort::BubbleSort, insertion_sort::InsertionSort, merge_sort::MergeSort, selection_sort::SelectionSort}, SortAlgorithm};
+use crate::algorithms::{sort::{bubble_sort::BubbleSort, heap_sort::HeapSort, insertion_sort::InsertionSort, merge_sort::MergeSort, selection_sort::SelectionSort}, SortAlgorithm};
 use std::collections::HashMap;
 
 pub mod bubble_sort;
+pub mod heap_sort;
 pub mod insertion_sort;
 pub mod merge_sort;
 pub mod selection_sort;
@@ -22,6 +23,9 @@ pub fn sort_algorithms_endpoints() -> HashMap<&'static str, SortAlgorithmFactory
 
     map.insert("merge", || Box::new(MergeSort));
     map.insert("merge-sort", || Box::new(MergeSort));
+
+    map.insert("heap", || Box::new(HeapSort));
+    map.insert("heap-sort", || Box::new(HeapSort));
 
     map
 }
