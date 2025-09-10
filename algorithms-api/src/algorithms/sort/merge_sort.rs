@@ -4,34 +4,34 @@ pub struct MergeSort;
 
 impl MergeSort {
     fn merge(&self, array: &mut Vec<f64>, left: usize, mid: usize, right: usize) {
-        let l: Vec<f64> = array[left..=mid].to_vec();
-        let r: Vec<f64> = array[mid + 1..=right].to_vec();
+        let left_array: Vec<f64> = array[left..=mid].to_vec();
+        let right_array: Vec<f64> = array[mid + 1..=right].to_vec();
 
-        let mut i = 0;
-        let mut j = 0;
-        let mut k = left;
+        let mut index = left;
+        let (mut index_left, mut index_right) = (0, 0);
 
-        while i < l.len() && j < r.len() {
-            if l[i] <= r[j] {
-                array[k] = l[i];
-                i += 1;
+        while index_left < left_array.len() && index_right < right_array.len() {
+            if left_array[index_left] <= right_array[index_right] {
+                array[index] = left_array[index_left];
+                index_left += 1;
             } else {
-                array[k] = r[j];
-                j += 1;
+                array[index] = right_array[index_right];
+                index_right += 1;
             }
-            k += 1;
+
+            index += 1;
         }
 
-        while i < l.len() {
-            array[k] = l[i];
-            i += 1;
-            k += 1;
+        while index_left < left_array.len() {
+            array[index] = left_array[index_left];
+            index_left += 1;
+            index += 1;
         }
 
-        while j < r.len() {
-            array[k] = r[j];
-            j += 1;
-            k += 1;
+        while index_right < right_array.len() {
+            array[index] = right_array[index_right];
+            index_right += 1;
+            index += 1;
         }
     }
 
@@ -42,10 +42,10 @@ impl MergeSort {
 
         let mid = left + (right - left) / 2;
 
-        Self::merge_sort(&self, array, left, mid);
-        Self::merge_sort(&self, array, mid + 1, right);
+        self.merge_sort(array, left, mid);
+        self.merge_sort(array, mid + 1, right);
 
-        Self::merge(&self, array, left, mid, right);
+        self.merge(array, left, mid, right);
     }
 }
 
