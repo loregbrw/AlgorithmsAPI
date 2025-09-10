@@ -23,5 +23,5 @@ pub struct SystemStats {
 #[derive(Serialize)]
 pub struct Stats {
     pub execution_time_us: u128,
-    pub memory_used_bytes: usize,
+    pub peak_memory_bytes: usize,
 }
