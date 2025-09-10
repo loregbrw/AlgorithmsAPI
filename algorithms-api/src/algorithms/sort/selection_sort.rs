@@ -11,22 +11,22 @@ impl BaseAlgorithm<Vec<f64>, Vec<f64>> for SelectionSort {
         "O(n²)"
     }
 
-    fn run(&self, mut array: Vec<f64>) -> Vec<f64> {
-        let n = array.len();
+    fn run(&self, mut input: Vec<f64>) -> Vec<f64> {
+        let size = input.len();
 
-        for i in 0..(n - 1) {
+        for i in 0..(size - 1) {
             let mut index_min = i;
 
-            for j in (i + 1)..n {
-                if array[j] < array[index_min] {
+            for j in (i + 1)..size {
+                if input[j] < input[index_min] {
                     index_min = j;
                 }
             }
 
-            array.swap(i, index_min);
+            input.swap(i, index_min);
         }
 
-        array
+        input
     }
 }
 
