@@ -11,15 +11,15 @@ impl BaseAlgorithm<Vec<f64>, Vec<f64>> for BubbleSort {
         "O(n²)"
     }
 
-    fn run(&self, mut array: Vec<f64>) -> Vec<f64> {
-        let size = array.len();
+    fn run(&self, mut input: Vec<f64>) -> Vec<f64> {
+        let size = input.len();
 
         for i in 0..size {
             let mut swapped = false;
 
             for j in 0..(size - i - 1) {
-                if array[j] > array[j + 1] {
-                    array.swap(j, j + 1);
+                if input[j] > input[j + 1] {
+                    input.swap(j, j + 1);
                     swapped = true;
                 }
             }
@@ -29,7 +29,7 @@ impl BaseAlgorithm<Vec<f64>, Vec<f64>> for BubbleSort {
             }
         }
 
-        array
+        input
     }
 }
 
